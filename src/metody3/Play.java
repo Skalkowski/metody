@@ -30,15 +30,30 @@ public class Play {
 			System.out.println("--------------------");
 			System.out.println("|    x   |" + "|    y   |");
 			System.out.println("--------------------");
-			for (int i = 0; i <= n; i++) {
+			for (int i = 0; i < n; i++) {
 				x = 1 + i * h;
 				y = y + h * (2 * Math.pow(y, 2) - 2 * x * (Math.pow(x, 3) - 1));
-				euler.add(new Euler(x,y));
-				 
+				euler.add(new Euler(x, y));
 
 			}
-			for (Euler e : euler){
-				System.out.printf("|%f||%f|\n", e.getX(), e.getY());
+			if (euler.size() <= 100000) {
+				;
+				for (Euler e : euler) {
+
+					System.out.printf("|%f||%f|", e.getX(), e.getY());
+
+				}
+			} else {
+				int wEuler = euler.size() / 10;
+				int licznik = 0;
+				for (int i = 0; i < 10; i++) {
+
+					System.out.printf("|%f||%f|\n", euler.get(licznik).getX(),
+							euler.get(licznik).getY());
+
+					licznik = wEuler + licznik;
+				}
+
 			}
 
 			// Menu
@@ -50,7 +65,7 @@ public class Play {
 				wybor = wczytaj.nextInt();
 			}
 			euler.removeAll(euler);
-			
+
 		} while (wybor == 1);
 
 	}
