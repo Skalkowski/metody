@@ -1,16 +1,16 @@
 package metody3;
 
-public class Euler {
+public class Heun {
 	private double x;
 	private double y;
 	
-	public Euler(double x, double y) {
+	public Heun(double x, double y) {
 		super();
 		this.x = x;
 		this.y = y;
 	}
 	
-	public Euler(){
+	public Heun(){
 	}
 	
 	public double getX() {
@@ -25,6 +25,4 @@ public class Euler {
 	public void setY(double y) {
 		this.y = y;
 	}
-	
-
 }

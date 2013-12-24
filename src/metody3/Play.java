@@ -1,7 +1,6 @@
 package metody3;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Scanner;
 
 public class Play {
@@ -14,6 +13,7 @@ public class Play {
 		double y = 1; // y0 w Eulerze
 		double x;
 		ArrayList<Euler> euler = new ArrayList<Euler>();
+		ArrayList<Heun> heun = new ArrayList<Heun>();
 		wczytaj = new Scanner(System.in);
 		do {
 			// Poczatek programu
@@ -27,29 +27,43 @@ public class Play {
 			h = (2 - 1) / (double) n;
 
 			y = 1;
-			System.out.println("--------------------");
-			System.out.println("|    x   |" + "|    y   |");
-			System.out.println("--------------------");
-			for (int i = 0; i < n; i++) {
+			
+
+			// liczenie eulera
+			x = 1;
+			y = 1;
+			euler.add(new Euler(x, y));
+			for (int i = 1; i <= n; i++) {
+				y = y + h * liczF(x, y);
 				x = 1 + i * h;
-				y = y + h * (2 * Math.pow(y, 2) - 2 * x * (Math.pow(x, 3) - 1));
 				euler.add(new Euler(x, y));
-
 			}
-			if (euler.size() <= 100000) {
-				;
-				for (Euler e : euler) {
 
-					System.out.printf("|%f||%f|", e.getX(), e.getY());
-
+			// liczenie Heuna
+			x = 1;
+			y = 1;
+			heun.add(new Heun(x, y));
+			for (int i = 1; i <= n; i++) {
+				y = y + h * 0.5
+						* (liczF(x, y) + liczF(x + h, y + h * liczF(x, y)));
+				x = 1 + i * h;
+				heun.add(new Heun(x, y));
+			}
+			
+			drukuj();
+			if (n <= 10) {
+				for (int i = 0; i <= n; i++) {
+					System.out.printf("|%f||%f||   ||%f||%f|\n", euler.get(i)
+							.getX(), euler.get(i).getY(), heun.get(i).getX(), heun.get(i).getY());
 				}
+
 			} else {
 				int wEuler = euler.size() / 10;
 				int licznik = 0;
 				for (int i = 0; i < 10; i++) {
 
-					System.out.printf("|%f||%f|\n", euler.get(licznik).getX(),
-							euler.get(licznik).getY());
+					System.out.printf("|%f||%f||   ||%f||%f|\n",
+							euler.get(licznik).getX(), euler.get(licznik).getY(), heun.get(licznik).getX(), heun.get(licznik).getY());
 
 					licznik = wEuler + licznik;
 				}
@@ -65,9 +79,20 @@ public class Play {
 				wybor = wczytaj.nextInt();
 			}
 			euler.removeAll(euler);
+			heun.removeAll(heun);
 
 		} while (wybor == 1);
 
+	}
+
+	public static double liczF(double x, double y) {
+		return (2 * Math.pow(y, 2) - 2 * x * (Math.pow(x, 3) - 1));
+	}
+	public static void drukuj(){
+		System.out.println("--------------------");
+		System.out.println("        Euler                     Heun");
+		System.out.println("|    x   |" + "|    y   ||   ||    x   |" + "|    y   |");
+		System.out.println("--------------------");
 	}
 
 }
