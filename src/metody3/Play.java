@@ -10,10 +10,11 @@ public class Play {
 		int n; // przedzial na ile kawalkow podzielic, wieksze niz 0!!
 		int wybor = 0;
 		double h;
-		double y = 1; // y0 w Eulerze
+		double y = 1;
 		double x;
 		ArrayList<Euler> euler = new ArrayList<Euler>();
 		ArrayList<Heun> heun = new ArrayList<Heun>();
+		ArrayList<Porownywalna> por = new ArrayList<Porownywalna>();
 		wczytaj = new Scanner(System.in);
 		do {
 			// Poczatek programu
@@ -27,7 +28,6 @@ public class Play {
 			h = (2 - 1) / (double) n;
 
 			y = 1;
-			
 
 			// liczenie eulera
 			x = 1;
@@ -49,12 +49,31 @@ public class Play {
 				x = 1 + i * h;
 				heun.add(new Heun(x, y));
 			}
-			
+
+			// liczenie porownywalnego punktu
+
+			x = 1;
+			y = 1;
+			por.add(new Porownywalna(x, y));
+			for (int i = 1; i <= n; i++) {
+				x = 1 + i * h;
+				y = Math.pow(x, 2);
+
+				por.add(new Porownywalna(x, y));
+			}
+
 			drukuj();
 			if (n <= 10) {
 				for (int i = 0; i <= n; i++) {
-					System.out.printf("|%f||%f||   ||%f||%f|\n", euler.get(i)
-							.getX(), euler.get(i).getY(), heun.get(i).getX(), heun.get(i).getY());
+					System.out
+							.printf("| %6d|| %10f||   || %10f|| %10f||     || %10f||     || %10f||\n",
+									i, euler.get(i).getX(),
+									euler.get(i).getY(),
+									heun.get(i).getY(),
+									Math.abs(euler.get(i).getY()
+											- por.get(i).getY()),
+									Math.abs(heun.get(i).getY()
+											- por.get(i).getY()));
 				}
 
 			} else {
@@ -62,8 +81,15 @@ public class Play {
 				int licznik = 0;
 				for (int i = 0; i < 10; i++) {
 
-					System.out.printf("|%f||%f||   ||%f||%f|\n",
-							euler.get(licznik).getX(), euler.get(licznik).getY(), heun.get(licznik).getX(), heun.get(licznik).getY());
+					System.out
+							.printf("| %6d|| %10f||   || %10f|| %10f||     || %10f||     || %10f||\n",
+									licznik, euler.get(licznik).getX(),
+									euler.get(licznik).getY(), heun
+											.get(licznik).getY(), Math
+											.abs(euler.get(licznik).getY()
+													- por.get(licznik).getY()),
+									Math.abs(heun.get(licznik).getY()
+											- por.get(licznik).getY()));
 
 					licznik = wEuler + licznik;
 				}
@@ -80,6 +106,7 @@ public class Play {
 			}
 			euler.removeAll(euler);
 			heun.removeAll(heun);
+			por.removeAll(por);
 
 		} while (wybor == 1);
 
@@ -88,11 +115,15 @@ public class Play {
 	public static double liczF(double x, double y) {
 		return (2 * Math.pow(y, 2) - 2 * x * (Math.pow(x, 3) - 1));
 	}
-	public static void drukuj(){
-		System.out.println("--------------------");
-		System.out.println("        Euler                     Heun");
-		System.out.println("|    x   |" + "|    y   ||   ||    x   |" + "|    y   |");
-		System.out.println("--------------------");
+
+	public static void drukuj() {
+		System.out
+				.println("-------------------------------------------------------------------------");
+		System.out.println("            Euler       Heun");
+		System.out
+				.println("|   k   ||     x     ||   ||     y     ||     y     ||     ||    erre   ||     ||    errh   ||");
+		System.out
+				.println("-------------------------------------------------------------------------");
 	}
 
 }
