@@ -67,7 +67,8 @@ public class Play {
 				for (int i = 0; i <= n; i++) {
 					System.out
 							.printf("| %6d|| %10f||   || %10f|| %10f||     || %10f||     || %10f||\n",
-									i, euler.get(i).getX(),
+									i,
+									euler.get(i).getX(),
 									euler.get(i).getY(),
 									heun.get(i).getY(),
 									Math.abs(euler.get(i).getY()
@@ -83,13 +84,13 @@ public class Play {
 
 					System.out
 							.printf("| %6d|| %10f||   || %10f|| %10f||     || %10f||     || %10f||\n",
-									licznik, euler.get(licznik).getX(),
-									euler.get(licznik).getY(), heun
-											.get(licznik).getY(), Math
-											.abs(euler.get(licznik).getY()
-													- por.get(licznik).getY()),
-									Math.abs(heun.get(licznik).getY()
-											- por.get(licznik).getY()));
+									licznik, euler.get(licznik).getX(), euler
+											.get(licznik).getY(),
+									heun.get(licznik).getY(), Math.abs(euler
+											.get(licznik).getY()
+											- por.get(licznik).getY()), Math
+											.abs(heun.get(licznik).getY()
+													- por.get(licznik).getY()));
 
 					licznik = wEuler + licznik;
 				}
@@ -98,7 +99,7 @@ public class Play {
 
 			// Menu
 			System.out
-					.println("Menu:\n1)Ja chce jeszcze raz!!\n2)Koniec programu");
+					.println("\n\n\nMenu:\n1)Ja chce jeszcze raz!!\n2)Koniec programu");
 			wybor = wczytaj.nextInt();
 			while (wybor < 1 || wybor > 2) {
 				System.out.println("nie ma takiej opcji, sprobuj jeszcze raz");
@@ -118,12 +119,13 @@ public class Play {
 
 	public static void drukuj() {
 		System.out
-				.println("-------------------------------------------------------------------------");
-		System.out.println("            Euler       Heun");
+				.println("-----------------------------------------------------------------------------------------------");
 		System.out
-				.println("|   k   ||     x     ||   ||     y     ||     y     ||     ||    erre   ||     ||    errh   ||");
+				.println("                               Euler         Heun               Euler                Heun  ");
 		System.out
-				.println("-------------------------------------------------------------------------");
+				.println("|   k   ||     x     ||   ||     y     ||     y     ||     || porównanie||     || porównanie||");
+		System.out
+				.println("-----------------------------------------------------------------------------------------------");
 	}
 
 }

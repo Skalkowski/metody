@@ -3,7 +3,7 @@ package metody3;
 public class Heun {
 	private double x;
 	private double y;
-	
+
 	public Heun(double x, double y) {
 		super();
 		this.x = x;
