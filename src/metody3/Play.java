@@ -34,8 +34,8 @@ public class Play {
 			y = 1;
 			euler.add(new Euler(x, y));
 			for (int i = 1; i <= n; i++) {
-				y = y + h * liczF(x, y);
-				x = 1 + i * h;
+				y = Euler.liczY(x, y, h);
+				x = liczX(h, i);
 				euler.add(new Euler(x, y));
 			}
 
@@ -44,9 +44,8 @@ public class Play {
 			y = 1;
 			heun.add(new Heun(x, y));
 			for (int i = 1; i <= n; i++) {
-				y = y + h * 0.5
-						* (liczF(x, y) + liczF(x + h, y + h * liczF(x, y)));
-				x = 1 + i * h;
+				y = Heun.liczY(x, y, h);
+				x = liczX(h, i);
 				heun.add(new Heun(x, y));
 			}
 
@@ -56,7 +55,7 @@ public class Play {
 			y = 1;
 			por.add(new Porownywalna(x, y));
 			for (int i = 1; i <= n; i++) {
-				x = 1 + i * h;
+				x = liczX(h, i);
 				y = Math.pow(x, 2);
 
 				por.add(new Porownywalna(x, y));
@@ -99,7 +98,7 @@ public class Play {
 
 			// Menu
 			System.out
-					.println("\n\n\nMenu:\n1)Ja chce jeszcze raz!!\n2)Koniec programu");
+					.println("\n\n\nMenu:\n1)Ja chce jeszcze raz!!\n2)Koniec programu\nTwoj wybor: ");
 			wybor = wczytaj.nextInt();
 			while (wybor < 1 || wybor > 2) {
 				System.out.println("nie ma takiej opcji, sprobuj jeszcze raz");
@@ -117,13 +116,17 @@ public class Play {
 		return (2 * Math.pow(y, 2) - 2 * x * (Math.pow(x, 3) - 1));
 	}
 
+	public static double liczX(double h, int i) {
+		return 1 + i * h;
+	}
+
 	public static void drukuj() {
 		System.out
 				.println("-----------------------------------------------------------------------------------------------");
 		System.out
 				.println("                               Euler         Heun               Euler                Heun  ");
 		System.out
-				.println("|   k   ||     x     ||   ||     y     ||     y     ||     || porównanie||     || porównanie||");
+				.println("|   k   ||     x     ||   ||     y     ||     y     ||     ||blad metody||     ||blad metody||");
 		System.out
 				.println("-----------------------------------------------------------------------------------------------");
 	}
